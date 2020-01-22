@@ -51,3 +51,11 @@ do
         killall -9 iostat mpstat
     done
 done
+
+# Shutdown the MySQL server
+ps cax | grep mysql > /dev/null
+if [ $? -eq 0 ]; then
+    cd /path/to/mysql-x.x.x
+    ./bin/mysqladmin -uroot shutdown  
+fi
+
