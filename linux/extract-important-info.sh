@@ -18,12 +18,13 @@ do
         echo "Separate pages based on their page type (${j})"
         grep "flush-type: ${j}" ${input}-${i}-leaf.txt > ${input}-${i}-leaf-${j}.txt
         awk '{ print $1, $7, $12 - $14, $24 }' ${input}-${i}-leaf-${j}.txt > ${input}-${i}-leaf-${j}-test.txt
+        sort -k 2 ${input}-${i}-leaf-${j}-test.txt > ${i}-leaf-${j}-test.txt
 
         echo "Parse the detailed info for tablespace ${i} / page type ${j}"
-        ./${parse_script} ${input}-${i}-leaf-${j}-test.txt > ${input}-${i}-leaf-${j}-test-result.txt
+        ./${parse_script} ${i}-leaf-${j}-test.txt > ${i}-leaf-${j}-test-result.txt
 
         echo "Remove temporary files"
-        rm ${input}-${i}-leaf-${j}.txt ${input}-${i}-leaf-${j}-test.txt
+        rm ${input}-${i}-leaf-${j}.txt ${input}-${i}-leaf-${j}-test.txt ${i}-leaf-${j}-test.txt
     done
     echo
 done
