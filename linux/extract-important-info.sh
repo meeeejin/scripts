@@ -23,7 +23,7 @@ do
         ./${parse_script} ${input}-${i}-leaf-${j}-test.txt > ${input}-${i}-leaf-${j}-test-result.txt
 
         echo "Remove temporary files"
-        rm ${input}-${i}-leaf.txt ${input}-${i}-leaf-${j}.txt ${input}-${i}-leaf-${j}-test.txt
+        rm ${input}-${i}-leaf-${j}.txt ${input}-${i}-leaf-${j}-test.txt
     done
     echo
 done
