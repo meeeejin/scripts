@@ -3,7 +3,10 @@
 #include <string>
 #include <sstream>
 #include <cstdlib>
+#include <iomanip>
 using namespace std;
+
+#define PAGE_SIZE 4096
 
 int main(int argc, char **argv) {
     if (argc != 3) {
@@ -13,7 +16,7 @@ int main(int argc, char **argv) {
 
     ifstream readFile;
     ofstream writeFile;
-    int min = 4096, max = 0, sum = 0, count = 0;
+    int min = PAGE_SIZE, max = 0, sum = 0, count = 0;
     int page, index, level, data, free, records;
     string str;
 
@@ -57,6 +60,7 @@ int main(int argc, char **argv) {
         ss << "\n# Parsing Result\nTotal number of pages = " << count
            << "\nTotal free space = " << sum
            << "\nAverage free space per page = " << sum / count
+           << " (" << fixed << setprecision(2) << 100 * (float) sum / (float) count / (float) PAGE_SIZE << "%)"
            << "\nMin free space = " << min
            << "\nMax free space = " << max << endl;
 
