@@ -32,14 +32,14 @@ int main(int argc, char **argv) {
 
     // Calculate the amount of data and free space of each page in the given input file (.ibd)
     cout << "\nParse " << argv[1] << endl;
-  /* 
+ 
     stringstream cmd;
     cmd << "innodb_space -f " << argv[1] << " space-index-pages-summary > " << "space-summary.txt";
     system(cmd.str().c_str());
 
     cout << "\nThe parsed file is saved to space-summary.txt" << endl;
     cout << "\nParse space-summary.txt" << endl;
-*/
+
 	// Open the parsed file
 	parsedFile.open("space-summary.txt");
 
