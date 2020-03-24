@@ -15,8 +15,10 @@ int main(int argc, char **argv) {
     }
 
     ifstream readFile;
+	ifstream parsedFile;
     ofstream writeFile;
-    int min = PAGE_SIZE, max = 0, sum = 0, count = 0;
+    unsigned long long int leafMin = PAGE_SIZE, leafMax = 0, leafSum = 0, leafCount = 0;
+    unsigned long long int nonleafMin = PAGE_SIZE, nonleafMax = 0, nonleafSum = 0, nonleafCount = 0;
     int page, index, level, data, free, records;
     string str;
 
@@ -30,39 +32,58 @@ int main(int argc, char **argv) {
 
     // Calculate the amount of data and free space of each page in the given input file (.ibd)
     cout << "\nParse " << argv[1] << endl;
-   
+  /* 
     stringstream cmd;
     cmd << "innodb_space -f " << argv[1] << " space-index-pages-summary > " << "space-summary.txt";
     system(cmd.str().c_str());
 
     cout << "\nThe parsed file is saved to space-summary.txt" << endl;
     cout << "\nParse space-summary.txt" << endl;
+*/
+	// Open the parsed file
+	parsedFile.open("space-summary.txt");
 
-    if (readFile.is_open()) {
+    if (parsedFile.is_open()) {
         // Skip the first line
-        getline(readFile, str);
+        getline(parsedFile, str);
         
         // Calculate the average free space of total pages in the given .ibd file
-        while (getline(readFile, str)) {
-
+        while (getline(parsedFile, str)) {
             istringstream is(str);
             is >> page >> index >> level >> data >> free >> records;
 
-            if (min > free) min = free;
-            if (max < free) max = free;
-        
-            sum += free;
-            count++;
+			if (level == 0) { // Leaf pages
+				if (leafMin > free) leafMin = free;
+				if (leafMax < free) leafMax = free;
+				leafSum += free;
+				leafCount++;
+			} else { // Non-leaf pages
+				if (nonleafMin > free) nonleafMin = free;
+				if (nonleafMax < free) nonleafMax = free;
+				nonleafSum += free;
+				nonleafCount++;
+			}
         }
 
         // Print and save the result
         stringstream ss;
-        ss << "\n# Parsing Result\nTotal number of pages = " << count
-           << "\nTotal free space = " << sum
-           << "\nAverage free space per page = " << sum / count
-           << " (" << fixed << setprecision(2) << 100 * (float) sum / (float) count / (float) PAGE_SIZE << "%)"
-           << "\nMin free space = " << min
-           << "\nMax free space = " << max << endl;
+        ss << "\n# Parsing Result\nTotal number of pages = " << leafCount + nonleafCount
+           << "\nTotal free space = " << leafSum + nonleafSum
+           << "\nAverage free space per page = " << (leafSum + nonleafSum) / (leafCount + nonleafCount)
+           << " (" << fixed << setprecision(2) << 100 * (float)(leafSum + nonleafSum) / (float)(leafCount + nonleafCount) / (float) PAGE_SIZE << "%)"
+           << "\n\n- Leaf Pages\nTotal number of pages = " << leafCount 
+           << "\nTotal free space = " << leafSum
+           << "\nAverage free space per page = " << leafSum / leafCount
+           << " (" << fixed << setprecision(2) << 100 * (float) leafSum / (float) leafCount / (float) PAGE_SIZE << "%)"
+		   << "\nMin free space = " << leafMin
+           << "\nMax free space = " << leafMax 
+		   << "\n\n- Non-leaf Pages\nTotal number of pages = " << nonleafCount 
+           << "\nTotal free space = " << nonleafSum
+           << "\nAverage free space per page = " << nonleafSum / nonleafCount
+           << " (" << fixed << setprecision(2) << 100 * (float) nonleafSum / (float) nonleafCount / (float) PAGE_SIZE << "%)"
+		   << "\nMin free space = " << nonleafMin
+           << "\nMax free space = " << nonleafMax 
+		   << endl;
 
         string result = ss.str();
         cout << result << endl;
@@ -75,6 +96,7 @@ int main(int argc, char **argv) {
 
     // Close the opened files
     readFile.close();
+    parsedFile.close();
     writeFile.close();
 
     return 0;
