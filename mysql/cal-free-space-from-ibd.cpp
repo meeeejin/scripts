@@ -70,17 +70,17 @@ int main(int argc, char **argv) {
         ss << "\n# Parsing Result\nTotal number of pages = " << leafCount + nonleafCount
            << "\nTotal free space = " << leafSum + nonleafSum
            << "\nAverage free space per page = " << (leafSum + nonleafSum) / (leafCount + nonleafCount)
-           << " (" << fixed << setprecision(2) << 100 * (float)(leafSum + nonleafSum) / (float)(leafCount + nonleafCount) / (float) PAGE_SIZE << "%)"
+           << " (" << fixed << setprecision(2) << 100 * (double)(leafSum + nonleafSum) / (double)(leafCount + nonleafCount) / (double) PAGE_SIZE << "%)"
            << "\n\n- Leaf Pages\nTotal number of pages = " << leafCount 
            << "\nTotal free space = " << leafSum
            << "\nAverage free space per page = " << leafSum / leafCount
-           << " (" << fixed << setprecision(2) << 100 * (float) leafSum / (float) leafCount / (float) PAGE_SIZE << "%)"
+           << " (" << fixed << setprecision(2) << 100 * (double) leafSum / (double) leafCount / (double) PAGE_SIZE << "%)"
 		   << "\nMin free space = " << leafMin
            << "\nMax free space = " << leafMax 
 		   << "\n\n- Non-leaf Pages\nTotal number of pages = " << nonleafCount 
            << "\nTotal free space = " << nonleafSum
            << "\nAverage free space per page = " << nonleafSum / nonleafCount
-           << " (" << fixed << setprecision(2) << 100 * (float) nonleafSum / (float) nonleafCount / (float) PAGE_SIZE << "%)"
+           << " (" << fixed << setprecision(2) << 100 * (double) nonleafSum / (double) nonleafCount / (double) PAGE_SIZE << "%)"
 		   << "\nMin free space = " << nonleafMin
            << "\nMax free space = " << nonleafMax 
 		   << endl;
