@@ -4,7 +4,7 @@ input=$1
 gnuplot -persist <<-EOFMarker
 	# setting
 	set term png size 1000,500 font "Helvetica,10"
-	set output "plot.png"
+	set output "$2.png"
 
 	set title "Experimental Results of Multiple MySQL Containers with LinkBench on Docker" font "Helvetica,15"
 

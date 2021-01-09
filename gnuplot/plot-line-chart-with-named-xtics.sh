@@ -4,9 +4,9 @@ input=$1
 gnuplot -persist <<-EOFMarker
 	# setting
 	set terminal pos eps enhanced size 4.5,3 font "Helvetica,20"
-	set output "${input}.eps"
+	set output "$2.eps"
 	set boxwidth 0.9
-	
+
     set ylabel "Transactions per minute Count (TpmC)" offset 1.5
    
     set style line 1 lt 1 pt 4
@@ -20,6 +20,6 @@ gnuplot -persist <<-EOFMarker
     set xtics ("R:W=1:1"1,"R:W=2:1"2,"R:W=3:1"3,"R:W=4:1"4)
 
 # plot
-	plot "${input}" index 0 u 1:2 ls 1 with linespoints title "WAR", \
-	    "${input}" index 1 u 1:2 ls 2 with linespoints title "RAW";
+	plot "${input}" index 0 u 1:2 ls 1 with linespoints title "A", \
+	     "${input}" index 1 u 1:2 ls 2 with linespoints title "B";
 EOFMarker

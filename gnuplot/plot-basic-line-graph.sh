@@ -13,7 +13,7 @@ gnuplot -persist <<-EOFMarker
     set xtic 0,10000,50000 
     set xrange [0:50000]
 
-    plot datafile using 3 with lines title "Reads", \
-        datafile using 4 with lines title "Writes", \
-        datafile using 5 with lines title "Total";
+    plot "$1" using 1 with lines title "Reads", \
+        "$1" using 2 with lines title "Writes", \
+        "$1" using 3 with lines title "Total";
 EOFMarker
