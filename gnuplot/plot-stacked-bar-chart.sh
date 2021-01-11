@@ -19,7 +19,7 @@ gnuplot -persist <<-EOFMarker
 	set ylabel "OPS" offset 1.5
 	set boxwidth 0.75 relative
 
-# plot
+	# plot
 	plot "${input}" using 2:xtic(1) notitle, \
 			 '' using 3 title "Instance 1", \
 			 '' using 4 title "Instance 2", \

@@ -19,7 +19,7 @@ gnuplot -persist <<-EOFMarker
 	set xrange [0:5]
     set xtics ("R:W=1:1"1,"R:W=2:1"2,"R:W=3:1"3,"R:W=4:1"4)
 
-# plot
+	# plot
 	plot "${input}" index 0 u 1:2 ls 1 with linespoints title "A", \
 	     "${input}" index 1 u 1:2 ls 2 with linespoints title "B";
 EOFMarker
