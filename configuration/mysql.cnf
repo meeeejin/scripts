@@ -1,0 +1,83 @@
+#
+# The MySQL database server configuration file.
+#
+[client]
+user=root
+port=3306
+socket=/tmp/mysql.sock
+
+[mysql]
+prompt=\u:\d>\_
+
+[mysqld_safe]
+socket=/tmp/mysql.sock
+#nice=0
+
+[mysqld]
+#
+# Basic Settings
+#
+default-storage-engine=innodb
+skip-grant-tables
+pid-file=/home/mijin/test_data/mysql.pid
+socket=/tmp/mysql.sock
+port=3306
+datadir=/home/mijin/test_data/
+log-error=/home/mijin/test_data/mysql_error.log
+
+##################################################
+# Need to Modify
+##################################################
+#
+# InnoDB
+#
+
+# Innodb page size
+innodb_page_size=4KB
+
+# file-per-table ON
+innodb_file_per_table=1
+
+# Buffer settings
+innodb_buffer_pool_size=11G
+innodb_buffer_pool_instances=8
+innodb_lru_scan_depth=1024
+innodb_max_dirty_pages_pct_lwm=0
+innodb_page_cleaners=8
+innodb_change_buffering=none
+
+# Transaction log settings
+# Log group path (iblog0, iblog1)
+innodb_log_group_home_dir=/home/mijin/test_log/
+innodb_log_file_size=500M
+innodb_log_files_in_group=3
+innodb_log_buffer_size=32M
+
+# Flush settings
+# 0:every 1 seconds, 1:fsync on commits, 2:writes on commits
+innodb_flush_log_at_trx_commit=0
+innodb_flush_neighbors=0
+innodb_flush_method=O_DIRECT
+
+# DWB setting
+innodb_doublewrite=ON
+
+# AIO control
+innodb_use_native_aio=true
+
+# etc
+max_connections=1024
+open_files_limit=24000
+log_error_verbosity=3
+
+# I/O settings
+#innodb_io_capacity=10000
+#innodb_io_capacity_max=20000
+#innodb_write_io_threads=32
+#innodb_read_io_threads=32
+
+# Monitoring settings
+#performance-schema-instrument='wait/synch/mutex/innodb/%=ON'
+#performance-schema-instrument='wait/synch/rwlock/innodb/%=ON'
+#innodb_status_output=ON
+#innodb_status_output_locks=ON
