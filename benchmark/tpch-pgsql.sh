@@ -1,6 +1,6 @@
 end=$((SECONDS+86400))
 
-# Write mutex information to file every second
+# Run TPC-H benchmark for 86400 seconds
 while [ $SECONDS -lt $end ]
 do
     ./tpch.sh ./results postgres vldb
